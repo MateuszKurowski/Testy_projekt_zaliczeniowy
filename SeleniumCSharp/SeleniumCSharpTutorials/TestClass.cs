@@ -9,6 +9,7 @@ using OpenQA.Selenium.Chrome;
 using SeleniumCSharpTutorials.BaseClass;
 using System.Threading;
 using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Interactions;
 
 namespace SeleniumCSharpTutorials
 {
@@ -18,14 +19,46 @@ namespace SeleniumCSharpTutorials
         [Test, Category("Smoke Testing")]
         public void TestMethod1()
         {
-            Assert.Ignore("Facebook zmienił dostęp do rejestracji, przez co wykonanie testu jest niemożliwe na obecnej wersji.");
             IWebElement emailTExtField = driver.FindElement(By.XPath(".//*[@id='email']"));
-            emailTExtField.SendKeys("Selenium C#"); 
-            IWebElement monthDropdownList = driver.FindElement(By.XPath(".//*[@id='month']"));
-            SelectElement element = new SelectElement(monthDropdownList);
-            element.SelectByIndex(1);
-            element.SelectByText("Mar");
-            element.SelectByValue("6");
+            emailTExtField.SendKeys("Selenium C#");
+            driver.FindElement(By.XPath(".//*[@data-testid='cookie-policy-manage-dialog-accept-button']")).Click();
+            IWebElement registerButton;
+            Thread.Sleep(3000);
+            try
+            {
+                registerButton = driver.FindElement(By.XPath(".//*[text()='Create new account']"));
+                Actions action = new Actions(driver);
+                action.MoveToElement(registerButton).Click().Perform();
+            }
+            catch (NoSuchElementException)
+            {
+                registerButton = driver.FindElement(By.XPath(".//*[text()='Create New Account']"));
+                Actions action = new Actions(driver);
+                action.MoveToElement(registerButton).Click().Perform();
+            }
+            Thread.Sleep(3000);
+
+            try
+            {
+                IWebElement monthDropdownList = driver.FindElement(By.XPath(".//*[@title='month']"));
+                Actions action = new Actions(driver);
+                action.MoveToElement(registerButton).Click().Perform();
+                SelectElement element = new SelectElement(monthDropdownList);
+                element.SelectByIndex(1);
+                element.SelectByText("Mar");
+                element.SelectByValue("6");
+            }
+            catch (NoSuchElementException)
+            {
+                IWebElement monthDropdownList = driver.FindElement(By.XPath(".//*[@title='Month']"));
+                Actions action = new Actions(driver);
+                action.MoveToElement(registerButton).Click().Perform();
+                SelectElement element = new SelectElement(monthDropdownList);
+                element.SelectByIndex(1);
+                element.SelectByText("Mar");
+                element.SelectByValue("6");
+            }
+            
         }
 
         [Test, Category("Regression Testing")]
