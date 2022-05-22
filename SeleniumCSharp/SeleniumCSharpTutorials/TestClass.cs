@@ -23,6 +23,7 @@ namespace SeleniumCSharpTutorials
             emailTExtField.SendKeys("Selenium C#");
             driver.FindElement(By.XPath(".//*[@data-testid='cookie-policy-manage-dialog-accept-button']")).Click();
             IWebElement registerButton;
+            // Trochę się temat skomplikował bo 
             Thread.Sleep(3000);
             try
             {
