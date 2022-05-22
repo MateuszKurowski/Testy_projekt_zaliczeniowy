@@ -23,7 +23,7 @@ namespace SeleniumCSharpTutorials
             emailTExtField.SendKeys("Selenium C#");
             driver.FindElement(By.XPath(".//*[@data-testid='cookie-policy-manage-dialog-accept-button']")).Click();
             IWebElement registerButton;
-            // Trochę się temat skomplikował bo 
+            // Trochę się temat skomplikował bo facebook od czasu powstania tutorialu zmnienił sposób rejestracji, teraz nie jest to formularz na stronie a formularz wyświetlany jako zdarzenie po naciśnięciu przycisku, domyślnie ukryty. Na dwóch przeglądarkach (Opera i Chrome) działa inaczej przez to kod sie trochę skomplikował bo pomimo złych praktyk chciałem by był uniwersalny do oceny
             Thread.Sleep(3000);
             try
             {
